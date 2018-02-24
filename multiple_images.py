@@ -9,7 +9,7 @@ import os
 original_image_list = ["./flower01.jpg",
                        "./dogs01.jpg",
                        "./cat01.jpg",
-                       "./ball.png"]
+                       "./ball.jpg"]
 
 filename_queue = tf.train.string_input_producer(original_image_list)
 
