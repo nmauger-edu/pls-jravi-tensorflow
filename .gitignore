@@ -52,5 +52,5 @@ fabric.properties
 venv
 m2*
 debug_*
-
+mnist_data/**
 

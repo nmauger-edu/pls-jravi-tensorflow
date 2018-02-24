@@ -37,27 +37,26 @@ with tf.Session() as sess:
 
         # Get an image tensor and print its value.
         image_array = sess.run(image)
-        print(image_array.shape)
+        print("{} : {}".format(image_file,image_array.shape))
+
 
         Image.fromarray(image_array.astype('uint8'), 'RGB').show()
 
         # The expand_dims adds a new dimension
         image_list.append(tf.expand_dims(image_array, 0))
 
-        # Finish off the filename queue coordinator.
-        coord.request_stop()
-        coord.join(threads)
+    # Finish off the filename queue coordinator.
+    coord.request_stop()
+    coord.join(threads)
 
-        index = 0
+    images_tensor = tf.stack(image_list)
+    print(images_tensor)
 
-        #Write image summary
-        summary_writer = tf.summary.FileWriter('./debug_multiple_images', graph=sess.graph)
+    #Write image summary
+    summary_writer = tf.summary.FileWriter('./debug_multiple_images', graph=sess.graph)
 
-        for image_tensor in image_list:
-            summary_str = sess.run(tf.summary.image("image-" + str(index), image_tensor))
-            summary_writer.add_summary(summary_str)
-            index += 1
+    summary_str = sess.run(tf.summary.image("images", images_tensor))
+    summary_writer.add_summary(summary_str)
 
-        summary_writer.close()
-
+    summary_writer.close()
 
